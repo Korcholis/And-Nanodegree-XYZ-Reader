@@ -15,11 +15,16 @@
      limitations under the License.
 -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="photo_placeholder">#ccc</color>
 
-    <color name="theme_primary">#04561A</color>
-    <color name="theme_primary_dark">#04561A</color>
-    <color name="theme_accent">#04561A</color>
     <color name="ltgray">#ffe0e0e0</color>
+
+    <color name="colorPrimary">#E95415</color>
+    <color name="colorPrimaryLight" tools:keep="@color/colorPrimaryLight">#fc7339</color>
+    <color name="colorPrimaryDark">#b94311</color>
+    <color name="colorAccent">#15c2e9</color>
+
+    <color name="primaryTextColor" tools:keep="@color/primaryTextColor">#000000</color>
+    <color name="secondaryTextColor" tools:keep="@color/secondaryTextColor">#FFFFFF</color>
 </resources>
