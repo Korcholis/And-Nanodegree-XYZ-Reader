@@ -20,13 +20,15 @@ import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.android.volley.toolbox.NetworkImageView;
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.github.florent37.picassopalette.PicassoPalette;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -115,7 +117,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
-        Adapter adapter = new Adapter(cursor);
+        Adapter adapter = new Adapter(cursor, this);
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
@@ -133,7 +135,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         @BindView(R.id.card_view)
         CardView cardView;
         @BindView(R.id.thumbnail)
-        NetworkImageView thumbnailView;
+        ImageView thumbnailView;
         @BindView(R.id.article_title)
         TextView titleView;
         @BindView(R.id.article_subtitle)
@@ -147,9 +149,11 @@ public class ArticleListActivity extends AppCompatActivity implements
 
     private class Adapter extends RecyclerView.Adapter<ViewHolder> {
         private Cursor mCursor;
+        private Context context;
 
-        public Adapter(Cursor cursor) {
+        public Adapter(Cursor cursor, Context context) {
             mCursor = cursor;
+            this.context = context;
         }
 
         @Override
@@ -203,10 +207,16 @@ public class ArticleListActivity extends AppCompatActivity implements
                                 + "<br/>" + " by "
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)));
             }
-            holder.thumbnailView.setImageUrl(
-                    mCursor.getString(ArticleLoader.Query.THUMB_URL),
-                    ImageLoaderHelper.getInstance(ArticleListActivity.this).getImageLoader());
-            //holder.thumbnailView.setAspectRatio(mCursor.getFloat(ArticleLoader.Query.ASPECT_RATIO));
+
+            String imageUrl = mCursor.getString(ArticleLoader.Query.THUMB_URL);
+
+            Picasso.with(context)
+                    .load(imageUrl)
+                    .into(holder.thumbnailView, PicassoPalette.with(imageUrl, holder.thumbnailView)
+                            .use(PicassoPalette.Profile.MUTED_DARK)
+                            .intoBackground(holder.cardView)
+                            .intoTextColor(holder.titleView, PicassoPalette.Swatch.TITLE_TEXT_COLOR)
+                            .intoTextColor(holder.subtitleView, PicassoPalette.Swatch.BODY_TEXT_COLOR));
         }
 
         @Override
