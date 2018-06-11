@@ -93,20 +93,6 @@ public class ArticleDetailFragment extends Fragment implements
         return fragment;
     }
 
-    static float progress(float v, float min, float max) {
-        return constrain((v - min) / (max - min), 0, 1);
-    }
-
-    static float constrain(float val, float min, float max) {
-        if (val < min) {
-            return min;
-        } else if (val > max) {
-            return max;
-        } else {
-            return val;
-        }
-    }
-
     public String getTitle() {
         return title;
     }
