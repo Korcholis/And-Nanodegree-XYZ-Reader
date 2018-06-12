@@ -9,12 +9,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.format.DateUtils;
@@ -61,6 +63,10 @@ public class ArticleDetailFragment extends Fragment implements
     FloatingActionButton mFab;
     @BindView(R.id.collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
+    @BindView(R.id.fragment_toolbar)
+    Toolbar fragmentToolbar;
+    @BindView(R.id.fragment_bar_layout)
+    AppBarLayout fragmentBarLayout;
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;

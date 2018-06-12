@@ -20,8 +20,6 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 
-import java.util.HashMap;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -37,9 +35,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     Toolbar mToolbar;
     private Cursor mCursor;
     private long mStartId;
-    private long mSelectedItemId;
-    private int mSelectedItemUpButtonFloor = Integer.MAX_VALUE;
-    private int mTopInset;
     private MyPagerAdapter mPagerAdapter;
 
     @Override
@@ -71,8 +66,8 @@ public class ArticleDetailActivity extends AppCompatActivity
 
             @Override
             public void onPageSelected(int position) {
-                getSupportActionBar().setTitle(((ArticleDetailFragment)mPagerAdapter.getItem(position)).getTitle());
-                getSupportActionBar().setSubtitle(((ArticleDetailFragment)mPagerAdapter.getItem(position)).getSubtitle());
+                getSupportActionBar().setTitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getTitle());
+                getSupportActionBar().setSubtitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getSubtitle());
 
             }
 
@@ -85,7 +80,6 @@ public class ArticleDetailActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
                 mStartId = ItemsContract.Items.getItemId(getIntent().getData());
-                mSelectedItemId = mStartId;
             }
         }
     }
@@ -108,8 +102,8 @@ public class ArticleDetailActivity extends AppCompatActivity
                 if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
                     final int position = mCursor.getPosition();
                     mPager.setCurrentItem(position, false);
-                    getSupportActionBar().setTitle(((ArticleDetailFragment)mPagerAdapter.getItem(position)).getTitle());
-                    getSupportActionBar().setSubtitle(((ArticleDetailFragment)mPagerAdapter.getItem(position)).getSubtitle());
+                    getSupportActionBar().setTitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getTitle());
+                    getSupportActionBar().setSubtitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getSubtitle());
                     break;
                 }
                 mCursor.moveToNext();
@@ -129,24 +123,10 @@ public class ArticleDetailActivity extends AppCompatActivity
             super(fm);
         }
 
-        private HashMap<Integer, ArticleDetailFragment> cache = new HashMap<>();
-
-        @Override
-        public void setPrimaryItem(ViewGroup container, int position, Object object) {
-            super.setPrimaryItem(container, position, object);
-            ArticleDetailFragment fragment = (ArticleDetailFragment) object;
-        }
-
         @Override
         public Fragment getItem(int position) {
-            if (cache.containsKey(position)) {
-                return cache.get(position);
-            }
-
             mCursor.moveToPosition(position);
-            ArticleDetailFragment fragment = ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
-            cache.put(position, fragment);
-            return fragment;
+            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
         }
 
         @Override
