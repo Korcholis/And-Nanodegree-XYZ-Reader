@@ -33,6 +33,13 @@
                 android:layout_height="120dp"
                 android:layout_gravity="bottom"/>
 
+            <ImageView
+                android:id="@+id/black_gradient_background"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:src="@drawable/black_gradient_bg"
+                android:layout_gravity="top"/>
+
             <android.support.v7.widget.Toolbar
                 android:id="@+id/fragment_toolbar"
                 android:layout_width="match_parent"
