@@ -5,8 +5,14 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
+import android.graphics.Color;
+import android.graphics.LinearGradient;
+import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -63,6 +69,8 @@ public class ArticleDetailFragment extends Fragment implements
     Toolbar fragmentToolbar;
     @BindView(R.id.fragment_bar_layout)
     AppBarLayout fragmentBarLayout;
+    @BindView(R.id.gradient_background)
+    ImageView gradientBackground;
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
@@ -226,7 +234,23 @@ public class ArticleDetailFragment extends Fragment implements
                                     .intoCallBack(new PicassoPalette.CallBack() {
                                         @Override
                                         public void onPaletteLoaded(Palette palette) {
-                                            collapsingToolbar.setContentScrimColor(palette.getDarkMutedColor(0xFF777777));
+                                            Palette.Swatch swatch = palette.getDarkMutedSwatch();
+                                            mMutedColor = swatch.getRgb();
+                                            collapsingToolbar.setContentScrimColor(mMutedColor);
+                                            int[] colors = new int[3];
+                                            colors[0] = mMutedColor;
+                                            colors[1] = mMutedColor;
+                                            colors[2] = Color.parseColor("#00FFFFFF");
+
+                                            GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colors);
+
+                                            gradient.setShape(GradientDrawable.RECTANGLE);
+                                            gradient.setGradientType(GradientDrawable.LINEAR_GRADIENT);
+
+                                            gradientBackground.setImageDrawable(gradient);
+
+                                            collapsingToolbar.setExpandedTitleTextColor(swatch.getTitleTextColor());
+                                            collapsingToolbar.setCollapsedTitleTextColor(swatch.getTitleTextColor());
                                         }
                                     }));
         } else {

@@ -16,8 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:expandedTitleGravity="bottom"
-            app:expandedTitleMarginEnd="32dp"
-            app:expandedTitleMarginStart="32dp"
+            app:expandedTitleMargin="32dp"
             app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
             app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 
@@ -27,6 +26,12 @@
                 android:layout_height="match_parent"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
+
+            <ImageView
+                android:id="@+id/gradient_background"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_gravity="bottom"/>
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/fragment_toolbar"
