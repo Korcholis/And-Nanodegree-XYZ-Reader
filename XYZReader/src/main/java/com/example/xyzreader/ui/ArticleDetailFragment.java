@@ -179,6 +179,7 @@ public class ArticleDetailFragment extends Fragment implements
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
+            mRootView.setVisibility(View.VISIBLE);
             title = mCursor.getString(ArticleLoader.Query.TITLE);
             subtitle = mCursor.getString(ArticleLoader.Query.AUTHOR);
             Date publishedDate = parsePublishedDate();
