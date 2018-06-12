@@ -20,13 +20,11 @@ import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.Spanned;
 import android.text.format.DateUtils;
-import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.xyzreader.R;
@@ -59,7 +57,7 @@ public class ArticleDetailFragment extends Fragment implements
     NestedScrollView mScrollView;
     @BindView(R.id.share_fab)
     FloatingActionButton mFab;
-    @BindView(R.id.collapsing_toolbar)
+    @BindView(R.id.fragment_collapsing_toolbar)
     CollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.fragment_toolbar)
     Toolbar fragmentToolbar;
