@@ -53,8 +53,6 @@ public class ArticleDetailFragment extends Fragment implements
     private static final String TAG = "ArticleDetailFragment";
     @BindView(R.id.draw_insets_frame_layout)
     CoordinatorLayout mDrawInsetsFrameLayout;
-    @BindView(R.id.meta_bar)
-    LinearLayout mMetaBar;
     @BindView(R.id.photo)
     ImageView mPhotoView;
     @BindView(R.id.scrollview)
@@ -175,40 +173,33 @@ public class ArticleDetailFragment extends Fragment implements
             return;
         }
 
-        TextView titleView = mRootView.findViewById(R.id.article_title);
-        TextView bylineView = mRootView.findViewById(R.id.article_byline);
-        bylineView.setMovementMethod(new LinkMovementMethod());
         final TextView bodyView = mRootView.findViewById(R.id.article_body);
 
 
         bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
 
         if (mCursor != null) {
-            //mRootView.setAlpha(0);
-            mRootView.setVisibility(View.VISIBLE);
-            //mRootView.animate().alpha(1);
             title = mCursor.getString(ArticleLoader.Query.TITLE);
             subtitle = mCursor.getString(ArticleLoader.Query.AUTHOR);
-            titleView.setText(title);
             Date publishedDate = parsePublishedDate();
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-                bylineView.setText(Html.fromHtml(
+                subtitle = Html.fromHtml(
                         DateUtils.getRelativeTimeSpanString(
                                 publishedDate.getTime(),
                                 System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
                                 DateUtils.FORMAT_ABBREV_ALL).toString()
                                 + " by <font color='#ffffff'>"
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
-
+                                + "</font>").toString();
             } else {
                 // If date is before 1902, just show the string
-                bylineView.setText(Html.fromHtml(
+                subtitle = Html.fromHtml(
                         outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>"));
-
+                                + "</font>").toString();
             }
+            fragmentToolbar.setTitle(title);
+            fragmentToolbar.setSubtitle(subtitle);
 
             new AsyncTask<Object, Void, Spanned>() {
 
@@ -231,9 +222,6 @@ public class ArticleDetailFragment extends Fragment implements
                     .into(mPhotoView,
                             PicassoPalette.with(imageUrl, mPhotoView)
                                     .use(PicassoPalette.Profile.MUTED_DARK)
-                                    .intoBackground(mMetaBar)
-                                    .intoTextColor(titleView, PicassoPalette.Swatch.TITLE_TEXT_COLOR)
-                                    .intoTextColor(bylineView, PicassoPalette.Swatch.BODY_TEXT_COLOR)
                                     .intoCallBack(new PicassoPalette.CallBack() {
                                         @Override
                                         public void onPaletteLoaded(Palette palette) {
@@ -242,8 +230,6 @@ public class ArticleDetailFragment extends Fragment implements
                                     }));
         } else {
             mRootView.setVisibility(View.GONE);
-            titleView.setText("N/A");
-            bylineView.setText("N/A");
             bodyView.setText("Loading…");
         }
     }

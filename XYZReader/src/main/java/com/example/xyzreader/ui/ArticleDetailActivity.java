@@ -102,8 +102,6 @@ public class ArticleDetailActivity extends AppCompatActivity
                 if (mCursor.getLong(ArticleLoader.Query._ID) == mStartId) {
                     final int position = mCursor.getPosition();
                     mPager.setCurrentItem(position, false);
-                    getSupportActionBar().setTitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getTitle());
-                    getSupportActionBar().setSubtitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getSubtitle());
                     break;
                 }
                 mCursor.moveToNext();
