@@ -81,6 +81,7 @@ public class ArticleListActivity extends AppCompatActivity implements
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle(R.string.app_name);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
 
         getLoaderManager().initLoader(0, null, this);
 

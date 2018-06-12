@@ -50,6 +50,7 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         getLoaderManager().initLoader(0, null, this);
 

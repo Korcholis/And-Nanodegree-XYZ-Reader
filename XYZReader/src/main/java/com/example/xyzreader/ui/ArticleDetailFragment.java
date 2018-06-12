@@ -141,6 +141,8 @@ public class ArticleDetailFragment extends Fragment implements
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
+        fragmentToolbar.setTitleMarginStart((int) (getResources().getDisplayMetrics().density * 72));
+
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -197,7 +199,7 @@ public class ArticleDetailFragment extends Fragment implements
                                 + mCursor.getString(ArticleLoader.Query.AUTHOR)
                                 + "</font>").toString();
             }
-            fragmentToolbar.setTitle(title);
+            collapsingToolbar.setTitle(title);
             fragmentToolbar.setSubtitle(subtitle);
 
             new AsyncTask<Object, Void, Spanned>() {
