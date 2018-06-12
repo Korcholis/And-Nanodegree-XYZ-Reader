@@ -5,6 +5,7 @@
     android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
+        android:id="@+id/fragment_bar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="48dp">
@@ -24,6 +25,7 @@
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
+                android:id="@+id/fragment_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
