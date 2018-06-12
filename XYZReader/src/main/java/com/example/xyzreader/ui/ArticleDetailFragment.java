@@ -10,9 +10,9 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.SubtitleCollapsingToolbarLayout;
 import android.support.v4.app.ShareCompat;
 import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
@@ -58,7 +58,7 @@ public class ArticleDetailFragment extends Fragment implements
     @BindView(R.id.share_fab)
     FloatingActionButton mFab;
     @BindView(R.id.fragment_collapsing_toolbar)
-    CollapsingToolbarLayout collapsingToolbar;
+    SubtitleCollapsingToolbarLayout collapsingToolbar;
     @BindView(R.id.fragment_toolbar)
     Toolbar fragmentToolbar;
     @BindView(R.id.fragment_bar_layout)
@@ -200,7 +200,7 @@ public class ArticleDetailFragment extends Fragment implements
                                 + "</font>").toString();
             }
             collapsingToolbar.setTitle(title);
-            fragmentToolbar.setSubtitle(subtitle);
+            collapsingToolbar.setSubtitle(subtitle);
 
             new AsyncTask<Object, Void, Spanned>() {
 
