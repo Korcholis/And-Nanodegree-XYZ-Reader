@@ -31,14 +31,14 @@
                 android:id="@+id/gradient_background"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:layout_gravity="bottom"/>
+                android:layout_gravity="bottom" />
 
             <ImageView
                 android:id="@+id/black_gradient_background"
                 android:layout_width="match_parent"
                 android:layout_height="120dp"
-                android:src="@drawable/black_gradient_bg"
-                android:layout_gravity="top"/>
+                android:layout_gravity="top"
+                android:src="@drawable/black_gradient_bg" />
 
             <android.support.v7.widget.Toolbar
                 android:id="@+id/fragment_toolbar"
@@ -83,8 +83,8 @@
         android:layout_marginBottom="@dimen/fab_margin"
         android:background="@drawable/add_fab_background"
         android:contentDescription="@string/action_share"
-        android:elevation="@dimen/fab_elevation"
         android:src="@drawable/ic_share"
-        android:stateListAnimator="@anim/fab_state_list_anim" />
+        android:stateListAnimator="@anim/fab_state_list_anim"
+        app:elevation="@dimen/fab_elevation" />
 
 </android.support.design.widget.CoordinatorLayout>

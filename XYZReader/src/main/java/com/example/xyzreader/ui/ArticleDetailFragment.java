@@ -6,13 +6,9 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.LinearGradient;
-import android.graphics.Shader;
 import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
-import android.graphics.drawable.ShapeDrawable;
-import android.graphics.drawable.shapes.RectShape;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
@@ -149,20 +145,37 @@ public class ArticleDetailFragment extends Fragment implements
 
         mStatusBarColorDrawable = new ColorDrawable(0);
 
+        mFab.hide();
+
         fragmentToolbar.setTitleMarginStart((int) (getResources().getDisplayMetrics().density * 72));
+
+        bindViews();
+        return mRootView;
+    }
+
+    private void enableFab(final String title) {
+        mFab.show();
 
         mFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(Intent.createChooser(ShareCompat.IntentBuilder.from(getActivity())
                         .setType("text/plain")
-                        .setText("Some sample text")
+                        .setText(title)
                         .getIntent(), getString(R.string.action_share)));
             }
         });
 
-        bindViews();
-        return mRootView;
+        mScrollView.setOnScrollChangeListener(new NestedScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChange(NestedScrollView v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                if (scrollY > 0) {
+                    mFab.hide();
+                } else {
+                    mFab.show();
+                }
+            }
+        });
     }
 
     private Date parsePublishedDate() {
@@ -215,6 +228,8 @@ public class ArticleDetailFragment extends Fragment implements
                 @Override
                 protected void onPostExecute(Spanned s) {
                     bodyView.setText(s);
+
+                    enableFab(title);
                 }
 
                 @Override

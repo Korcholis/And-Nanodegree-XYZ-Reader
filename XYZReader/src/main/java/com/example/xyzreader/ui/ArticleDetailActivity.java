@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
@@ -56,27 +55,10 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         mPagerAdapter = new MyPagerAdapter(getFragmentManager());
         mPager.setAdapter(mPagerAdapter);
+        mPager.setOffscreenPageLimit(1);
         mPager.setPageMargin((int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, 1, getResources().getDisplayMetrics()));
         mPager.setPageMarginDrawable(new ColorDrawable(0x22000000));
-        mPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                getSupportActionBar().setTitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getTitle());
-                getSupportActionBar().setSubtitle(((ArticleDetailFragment) mPagerAdapter.getItem(position)).getSubtitle());
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
 
         if (savedInstanceState == null) {
             if (getIntent() != null && getIntent().getData() != null) {
