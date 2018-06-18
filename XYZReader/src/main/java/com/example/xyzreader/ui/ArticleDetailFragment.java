@@ -26,6 +26,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -67,6 +70,8 @@ public class ArticleDetailFragment extends Fragment implements
     AppBarLayout fragmentBarLayout;
     @BindView(R.id.gradient_background)
     ImageView gradientBackground;
+    @BindView(R.id.pb_wrap)
+    FrameLayout progressBarWrap;
     private Cursor mCursor;
     private long mItemId;
     private View mRootView;
@@ -150,6 +155,9 @@ public class ArticleDetailFragment extends Fragment implements
         fragmentToolbar.setTitleMarginStart((int) (getResources().getDisplayMetrics().density * 72));
 
         bindViews();
+
+        progressBarWrap.setVisibility(View.VISIBLE);
+
         return mRootView;
     }
 
@@ -230,6 +238,21 @@ public class ArticleDetailFragment extends Fragment implements
                     bodyView.setText(s);
 
                     enableFab(title);
+
+                    Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivityCast(), R.anim.fade_out);
+                    progressBarWrap.startAnimation(fadeInAnimation);
+                    fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+                        @Override
+                        public void onAnimationStart(Animation animation) { }
+
+                        @Override
+                        public void onAnimationEnd(Animation animation) {
+                            progressBarWrap.setVisibility(View.GONE);
+                        }
+
+                        @Override
+                        public void onAnimationRepeat(Animation animation) { }
+                    });
                 }
 
                 @Override
