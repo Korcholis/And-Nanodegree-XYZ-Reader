@@ -44,6 +44,7 @@ import java.util.GregorianCalendar;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import ru.noties.markwon.Markwon;
 
 /**
  * A fragment representing a single Article detail screen. This fragment is
@@ -204,9 +205,6 @@ public class ArticleDetailFragment extends Fragment implements
 
         final TextView bodyView = mRootView.findViewById(R.id.article_body);
 
-
-        bodyView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
-
         if (mCursor != null) {
             mRootView.setVisibility(View.VISIBLE);
             title = mCursor.getString(ArticleLoader.Query.TITLE);
@@ -231,33 +229,39 @@ public class ArticleDetailFragment extends Fragment implements
             collapsingToolbar.setTitle(title);
             collapsingToolbar.setSubtitle(subtitle);
 
-            new AsyncTask<Object, Void, Spanned>() {
+            final Fragment fragment = this;
+
+            new AsyncTask<Object, Void, CharSequence>() {
 
                 @Override
-                protected void onPostExecute(Spanned s) {
+                protected void onPostExecute(CharSequence s) {
                     bodyView.setText(s);
 
                     enableFab(title);
 
-                    Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivityCast(), R.anim.fade_out);
-                    progressBarWrap.startAnimation(fadeInAnimation);
-                    fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
-                        @Override
-                        public void onAnimationStart(Animation animation) { }
+                    if (fragment.isVisible()) {
+                        Animation fadeInAnimation = AnimationUtils.loadAnimation(getActivityCast(), R.anim.fade_out);
+                        progressBarWrap.startAnimation(fadeInAnimation);
+                        fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
+                            @Override
+                            public void onAnimationStart(Animation animation) { }
 
-                        @Override
-                        public void onAnimationEnd(Animation animation) {
-                            progressBarWrap.setVisibility(View.GONE);
-                        }
+                            @Override
+                            public void onAnimationEnd(Animation animation) {
+                                progressBarWrap.setVisibility(View.GONE);
+                            }
 
-                        @Override
-                        public void onAnimationRepeat(Animation animation) { }
-                    });
+                            @Override
+                            public void onAnimationRepeat(Animation animation) { }
+                        });
+                    } else {
+                        progressBarWrap.setVisibility(View.GONE);
+                    }
                 }
 
                 @Override
-                protected Spanned doInBackground(Object... objects) {
-                    return Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />"));
+                protected CharSequence doInBackground(Object... objects) {
+                    return Markwon.markdown(getActivityCast(), mCursor.getString(ArticleLoader.Query.BODY));
                 }
             }.execute();
 
