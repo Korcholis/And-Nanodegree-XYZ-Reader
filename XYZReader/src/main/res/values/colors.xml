@@ -27,4 +27,5 @@
 
     <color name="primaryTextColor" tools:keep="@color/primaryTextColor">#000000</color>
     <color name="secondaryTextColor" tools:keep="@color/secondaryTextColor">#FFFFFF</color>
+    <color name="cards_wrapper_bg">#555</color>
 </resources>

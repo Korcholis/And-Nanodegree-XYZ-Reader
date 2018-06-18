@@ -6,7 +6,8 @@
     <android.support.design.widget.CoordinatorLayout
         android:id="@+id/draw_insets_frame_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cards_wrapper_bg">
 
         <android.support.design.widget.AppBarLayout
             android:id="@+id/fragment_bar_layout"
@@ -59,24 +60,28 @@
             android:fillViewport="true"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <android.support.v7.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="@dimen/detail_inner_horiz_margin">
-
-                <TextView
-                    android:id="@+id/article_body"
-                    style="?android:attr/textAppearanceMedium"
+                android:padding="@dimen/detail_inner_horiz_margin">
+                <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
-                    android:maxWidth="@dimen/detail_card_max_width"
-                    android:padding="@dimen/detail_inner_horiz_margin"
-                    android:textColor="@color/primaryTextColor"
-                    android:textColorLink="@color/colorAccent"
-                    android:textSize="@dimen/detail_body_text_size" />
-            </android.support.v7.widget.CardView>
+                    android:layout_gravity="center_horizontal">
+
+                    <TextView
+                        android:id="@+id/article_body"
+                        style="?android:attr/textAppearanceMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
+                        android:maxWidth="@dimen/detail_card_max_width"
+                        android:padding="@dimen/detail_inner_horiz_margin"
+                        android:textColor="@color/primaryTextColor"
+                        android:textColorLink="@color/colorAccent"
+                        android:textSize="@dimen/detail_body_text_size" />
+                </android.support.v7.widget.CardView>
+            </FrameLayout>
 
         </android.support.v4.widget.NestedScrollView>
 
