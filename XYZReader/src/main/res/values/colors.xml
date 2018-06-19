@@ -16,8 +16,6 @@
 -->
 
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <color name="photo_placeholder">#ccc</color>
-
     <color name="ltgray">#ffe0e0e0</color>
 
     <color name="transparent">#00FFFFFF</color>
