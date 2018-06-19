@@ -44,6 +44,7 @@ import butterknife.ButterKnife;
  * touched, lead to a {@link ArticleDetailActivity} representing item details. On tablets, the
  * activity presents a grid of items as cards.
  */
+@SuppressWarnings("WeakerAccess")
 public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -142,7 +143,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         @BindView(R.id.article_subtitle)
         TextView subtitleView;
 
-        public ViewHolder(View view) {
+        ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
         }
@@ -152,7 +153,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         private Cursor mCursor;
         private Context context;
 
-        public Adapter(Cursor cursor, Context context) {
+        Adapter(Cursor cursor, Context context) {
             mCursor = cursor;
             this.context = context;
         }

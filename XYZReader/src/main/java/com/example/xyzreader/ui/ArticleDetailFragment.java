@@ -5,9 +5,6 @@ import android.app.LoaderManager;
 import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -20,7 +17,6 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v7.graphics.Palette;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
-import android.text.Spanned;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -77,10 +73,6 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
-    private ColorDrawable mStatusBarColorDrawable;
-    private int mTopInset;
-    private int mScrollY;
-    private boolean mIsCard = false;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -105,14 +97,6 @@ public class ArticleDetailFragment extends Fragment implements
         return fragment;
     }
 
-    public String getTitle() {
-        return title;
-    }
-
-    public String getSubtitle() {
-        return subtitle;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,11 +105,10 @@ public class ArticleDetailFragment extends Fragment implements
             mItemId = getArguments().getLong(ARG_ITEM_ID);
         }
 
-        mIsCard = getResources().getBoolean(R.bool.detail_is_card);
         setHasOptionsMenu(true);
     }
 
-    public ArticleDetailActivity getActivityCast() {
+    private ArticleDetailActivity getActivityCast() {
         return (ArticleDetailActivity) getActivity();
     }
 
@@ -148,8 +131,6 @@ public class ArticleDetailFragment extends Fragment implements
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
         ButterKnife.bind(this, mRootView);
-
-        mStatusBarColorDrawable = new ColorDrawable(0);
 
         mFab.hide();
 
@@ -244,7 +225,8 @@ public class ArticleDetailFragment extends Fragment implements
                         progressBarWrap.startAnimation(fadeInAnimation);
                         fadeInAnimation.setAnimationListener(new Animation.AnimationListener() {
                             @Override
-                            public void onAnimationStart(Animation animation) { }
+                            public void onAnimationStart(Animation animation) {
+                            }
 
                             @Override
                             public void onAnimationEnd(Animation animation) {
@@ -252,7 +234,8 @@ public class ArticleDetailFragment extends Fragment implements
                             }
 
                             @Override
-                            public void onAnimationRepeat(Animation animation) { }
+                            public void onAnimationRepeat(Animation animation) {
+                            }
                         });
                     } else {
                         progressBarWrap.setVisibility(View.GONE);
@@ -282,7 +265,7 @@ public class ArticleDetailFragment extends Fragment implements
                                             int[] colors = new int[3];
                                             colors[0] = mMutedColor;
                                             colors[1] = mMutedColor;
-                                            colors[2] = Color.parseColor("#00FFFFFF");
+                                            colors[2] = getResources().getColor(R.color.transparent);
 
                                             GradientDrawable gradient = new GradientDrawable(GradientDrawable.Orientation.BOTTOM_TOP, colors);
 

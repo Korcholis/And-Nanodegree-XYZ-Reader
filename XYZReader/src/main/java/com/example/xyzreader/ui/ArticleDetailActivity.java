@@ -25,6 +25,7 @@ import butterknife.ButterKnife;
 /**
  * An activity representing a single Article detail screen, letting you swipe between articles.
  */
+@SuppressWarnings("ALL")
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
@@ -100,7 +101,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     }
 
     private class MyPagerAdapter extends FragmentStatePagerAdapter {
-        public MyPagerAdapter(FragmentManager fm) {
+        MyPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 

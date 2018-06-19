@@ -20,6 +20,8 @@
 
     <color name="ltgray">#ffe0e0e0</color>
 
+    <color name="transparent">#00FFFFFF</color>
+
     <color name="colorPrimary">#E95415</color>
     <color name="colorPrimaryLight" tools:keep="@color/colorPrimaryLight">#fc7339</color>
     <color name="colorPrimaryDark">#b94311</color>
