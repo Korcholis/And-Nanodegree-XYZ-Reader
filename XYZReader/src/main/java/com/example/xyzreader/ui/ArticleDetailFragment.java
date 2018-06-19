@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -51,6 +52,7 @@ public class ArticleDetailFragment extends Fragment implements
         LoaderManager.LoaderCallbacks<Cursor> {
     public static final String ARG_ITEM_ID = "item_id";
     private static final String TAG = "ArticleDetailFragment";
+    private static final String LIST_SCROLL_POSITION = "list_scroll_pos";
     @BindView(R.id.draw_insets_frame_layout)
     CoordinatorLayout mDrawInsetsFrameLayout;
     @BindView(R.id.photo)
@@ -73,6 +75,7 @@ public class ArticleDetailFragment extends Fragment implements
     private long mItemId;
     private View mRootView;
     private int mMutedColor = 0xFF333333;
+    private boolean finishedLoading = false;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -81,6 +84,7 @@ public class ArticleDetailFragment extends Fragment implements
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2, 1, 1);
     private String title;
     private String subtitle;
+    private int savedScrollPos = 0;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -127,6 +131,12 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(LIST_SCROLL_POSITION, mScrollView.getScrollY());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mRootView = inflater.inflate(R.layout.fragment_article_detail, container, false);
@@ -141,6 +151,16 @@ public class ArticleDetailFragment extends Fragment implements
         progressBarWrap.setVisibility(View.VISIBLE);
 
         return mRootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        if (savedInstanceState != null) {
+            savedScrollPos = savedInstanceState.getInt(LIST_SCROLL_POSITION, 0);
+        }
+
+        moveToScrollIfPossible();
     }
 
     private void enableFab(final String title) {
@@ -176,6 +196,12 @@ public class ArticleDetailFragment extends Fragment implements
             Log.e(TAG, ex.getMessage());
             Log.i(TAG, "passing today's date");
             return new Date();
+        }
+    }
+
+    private void moveToScrollIfPossible() {
+        if (finishedLoading) {
+            mScrollView.scrollTo(0, savedScrollPos);
         }
     }
 
@@ -240,6 +266,10 @@ public class ArticleDetailFragment extends Fragment implements
                     } else {
                         progressBarWrap.setVisibility(View.GONE);
                     }
+
+                    finishedLoading = true;
+
+                    moveToScrollIfPossible();
                 }
 
                 @Override

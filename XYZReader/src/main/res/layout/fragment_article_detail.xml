@@ -63,7 +63,7 @@
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="@dimen/detail_inner_horiz_margin">
+                android:padding="@dimen/cv_margin">
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
                         android:layout_height="wrap_content"
                         android:lineSpacingMultiplier="@fraction/detail_body_line_spacing_multiplier"
                         android:maxWidth="@dimen/detail_card_max_width"
-                        android:padding="@dimen/detail_inner_horiz_margin"
+                        android:padding="@dimen/cv_margin"
                         android:textColor="@color/primaryTextColor"
                         android:textColorLink="@color/colorAccent"
                         android:textSize="@dimen/detail_body_text_size" />

@@ -7,4 +7,6 @@
     <dimen name="fab_margin">24dp</dimen>
     <dimen name="pb_size">48dp</dimen>
 
+    <dimen name="cv_margin">16dp</dimen>
+
 </resources>
