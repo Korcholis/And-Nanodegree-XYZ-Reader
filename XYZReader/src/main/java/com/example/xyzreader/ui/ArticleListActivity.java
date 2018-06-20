@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -49,6 +50,7 @@ public class ArticleListActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
 
     private static final String TAG = ArticleListActivity.class.toString();
+    private static final String LIST_STATE = "saved_list_pos";
     @BindView(R.id.toolbar)
     Toolbar mToolbar;
     @BindView(R.id.toolbar_container)
@@ -73,6 +75,8 @@ public class ArticleListActivity extends AppCompatActivity implements
             }
         }
     };
+    private Parcelable listState;
+    private StaggeredGridLayoutManager sglm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +107,23 @@ public class ArticleListActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (sglm != null ){
+            outState.putParcelable(LIST_STATE, sglm.onSaveInstanceState());
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            listState = savedInstanceState.getParcelable(LIST_STATE);
+        }
+    }
+
+    @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
@@ -123,8 +144,12 @@ public class ArticleListActivity extends AppCompatActivity implements
         adapter.setHasStableIds(true);
         mRecyclerView.setAdapter(adapter);
         int columnCount = getResources().getInteger(R.integer.list_column_count);
-        StaggeredGridLayoutManager sglm =
-                new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+        sglm = new StaggeredGridLayoutManager(columnCount, StaggeredGridLayoutManager.VERTICAL);
+
+        if (listState != null) {
+            sglm.onRestoreInstanceState(listState);
+        }
+
         mRecyclerView.setLayoutManager(sglm);
     }
 

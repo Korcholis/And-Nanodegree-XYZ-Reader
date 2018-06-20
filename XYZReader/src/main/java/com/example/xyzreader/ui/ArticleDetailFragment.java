@@ -127,7 +127,13 @@ public class ArticleDetailFragment extends Fragment implements
         // fragments because their mIndex is -1 (haven't been added to the activity yet). Thus,
         // we do this in onActivityCreated.
 
-        getLoaderManager().initLoader(0, null, fragment);
+        if (getLoaderManager().getLoader(0) == null) {
+            getLoaderManager().initLoader(0, null, fragment);
+        } else {
+            getLoaderManager().restartLoader(0, savedInstanceState, fragment);
+        }
+
+
     }
 
     @Override
@@ -202,6 +208,7 @@ public class ArticleDetailFragment extends Fragment implements
     private void moveToScrollIfPossible() {
         if (finishedLoading) {
             mScrollView.scrollTo(0, savedScrollPos);
+            mScrollView.scrollTo(0, savedScrollPos);
         }
     }
 
@@ -269,7 +276,21 @@ public class ArticleDetailFragment extends Fragment implements
 
                     finishedLoading = true;
 
-                    moveToScrollIfPossible();
+                    AsyncTask<Object, Void, Void> task = new AsyncTask<Object, Void, Void>() {
+                        @Override
+                        protected Void doInBackground(Object... objects) {
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void aVoid) {
+                            super.onPostExecute(aVoid);
+
+                            moveToScrollIfPossible();
+                        }
+                    };
+
+                    task.execute();
                 }
 
                 @Override
