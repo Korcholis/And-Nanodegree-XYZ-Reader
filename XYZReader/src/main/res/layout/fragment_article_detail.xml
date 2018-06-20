@@ -20,7 +20,8 @@
                 android:id="@+id/fragment_collapsing_toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                app:expandedTitleGravity="bottom"
+                app:expandedTitleGravity="bottom|start"
+                app:expandedTitleMarginStart="@dimen/tb_title_margin"
                 app:expandedTitleTextAppearance="@style/TextAppearance.Design.CollapsingToolbar.Expanded"
                 app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
 

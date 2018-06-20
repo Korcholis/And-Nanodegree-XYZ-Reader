@@ -8,5 +8,6 @@
     <dimen name="pb_size">48dp</dimen>
 
     <dimen name="cv_margin">16dp</dimen>
+    <dimen name="tb_title_margin">64dp</dimen>
 
 </resources>
