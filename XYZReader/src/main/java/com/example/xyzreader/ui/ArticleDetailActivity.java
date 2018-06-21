@@ -54,7 +54,7 @@ public class ArticleDetailActivity extends AppCompatActivity
 
         getLoaderManager().initLoader(0, null, this);
 
-        mPagerAdapter = new MyPagerAdapter(getFragmentManager());
+        mPagerAdapter = new MyPagerAdapter(getFragmentManager(), null);
         mPager.setAdapter(mPagerAdapter);
         mPager.setOffscreenPageLimit(1);
         mPager.setPageMargin((int) TypedValue
@@ -76,7 +76,7 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     public void onLoadFinished(Loader<Cursor> cursorLoader, Cursor cursor) {
         mCursor = cursor;
-        mPagerAdapter.notifyDataSetChanged();
+        mPagerAdapter.swapCursor(mCursor);
 
         // Select the start ID
         if (mStartId > 0) {
@@ -97,23 +97,6 @@ public class ArticleDetailActivity extends AppCompatActivity
     @Override
     public void onLoaderReset(Loader<Cursor> cursorLoader) {
         mCursor = null;
-        mPagerAdapter.notifyDataSetChanged();
-    }
-
-    private class MyPagerAdapter extends FragmentStatePagerAdapter {
-        MyPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            mCursor.moveToPosition(position);
-            return ArticleDetailFragment.newInstance(mCursor.getLong(ArticleLoader.Query._ID));
-        }
-
-        @Override
-        public int getCount() {
-            return (mCursor != null) ? mCursor.getCount() : 0;
-        }
+        mPagerAdapter.swapCursor(mCursor);
     }
 }

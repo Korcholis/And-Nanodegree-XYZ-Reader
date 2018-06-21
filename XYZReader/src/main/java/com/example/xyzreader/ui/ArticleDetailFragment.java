@@ -224,22 +224,16 @@ public class ArticleDetailFragment extends Fragment implements
             title = mCursor.getString(ArticleLoader.Query.TITLE);
             subtitle = mCursor.getString(ArticleLoader.Query.AUTHOR);
             Date publishedDate = parsePublishedDate();
+
+            String relativeDate = outputFormat.format(publishedDate);
             if (!publishedDate.before(START_OF_EPOCH.getTime())) {
-                subtitle = Html.fromHtml(
-                        DateUtils.getRelativeTimeSpanString(
-                                publishedDate.getTime(),
-                                System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
-                                DateUtils.FORMAT_ABBREV_ALL).toString()
-                                + " by <font color='#ffffff'>"
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>").toString();
-            } else {
-                // If date is before 1902, just show the string
-                subtitle = Html.fromHtml(
-                        outputFormat.format(publishedDate) + " by <font color='#ffffff'>"
-                                + mCursor.getString(ArticleLoader.Query.AUTHOR)
-                                + "</font>").toString();
+                relativeDate = DateUtils.getRelativeTimeSpanString(
+                        publishedDate.getTime(),
+                        System.currentTimeMillis(), DateUtils.HOUR_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL).toString();
             }
+            subtitle = Html.fromHtml(String.format(getString(R.string.date_by_author), relativeDate, mCursor.getString(ArticleLoader.Query.AUTHOR))).toString();
+
             collapsingToolbar.setTitle(title);
             collapsingToolbar.setSubtitle(subtitle);
 

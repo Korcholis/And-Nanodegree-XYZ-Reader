@@ -9,4 +9,6 @@
 
     <string name="up">Up</string>
 
+    <string name="date_by_author"><![CDATA[%1$s by <font color=\'#ffffff\'>%2$s</font>]]></string>
+
 </resources>
