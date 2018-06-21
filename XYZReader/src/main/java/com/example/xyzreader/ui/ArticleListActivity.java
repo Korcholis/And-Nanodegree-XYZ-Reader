@@ -109,7 +109,7 @@ public class ArticleListActivity extends AppCompatActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        if (sglm != null ){
+        if (sglm != null) {
             outState.putParcelable(LIST_STATE, sglm.onSaveInstanceState());
         }
     }
